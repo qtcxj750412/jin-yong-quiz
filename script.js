@@ -9,11 +9,21 @@ async function loadQuizData() {
             throw new Error('Failed to load quiz data');
         }
         quizData = await response.json();
+        // 随机排序题目
+        shuffleArray(quizData);
         return true;
     } catch (error) {
         console.error('Error loading quiz data:', error);
         alert('加载题库数据失败，请刷新页面重试');
         return false;
+    }
+}
+
+// 随机打乱数组函数
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
     }
 }
 
@@ -123,6 +133,11 @@ function selectOption(questionIndex, optionIndex) {
                 option.classList.add('correct');
                 feedback.innerHTML = '<div class="feedback correct">✓ 回答正确！</div>';
                 score++;
+                
+                // 如果答案正确，延迟1秒后自动进入下一题
+                setTimeout(() => {
+                    goToNextQuestion();
+                }, 1000);
             } else {
                 option.classList.add('incorrect');
                 feedback.innerHTML = `<div class="feedback incorrect">✗ 回答错误！正确答案是：${question.options[question.correct]}</div>`;
@@ -132,8 +147,10 @@ function selectOption(questionIndex, optionIndex) {
         }
     });
     
-    // 显示下一题按钮
-    nextBtn.style.display = 'inline-block';
+    // 显示下一题按钮（仅当答案错误时需要）
+    if (optionIndex !== question.correct) {
+        nextBtn.style.display = 'inline-block';
+    }
 }
 
 // 更新导航按钮
