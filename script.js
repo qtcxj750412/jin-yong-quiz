@@ -148,6 +148,11 @@ function selectOption(questionIndex, optionIndex) {
             } else {
                 option.classList.add('incorrect');
                 feedback.innerHTML = `<div class="feedback incorrect">✗ 回答错误！正确答案是：${question.options[question.correct]}</div>`;
+                
+                // 如果答案错误，延迟3秒后自动进入下一题
+                setTimeout(() => {
+                    goToNextQuestion();
+                }, 3000);
             }
         } else if (i === question.correct) {
             option.classList.add('correct');
