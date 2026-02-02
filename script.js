@@ -33,6 +33,7 @@ let score = 0;
 let userAnswers = [];
 let startTime = 0;
 let endTime = 0;
+let timerInterval = null;
 
 // DOM 元素
 const welcomeScreen = document.getElementById('welcome-screen');
@@ -44,12 +45,14 @@ const prevBtn = document.getElementById('prev-btn');
 const nextBtn = document.getElementById('next-btn');
 const restartBtn = document.getElementById('restart-btn');
 const backHomeBtn = document.getElementById('back-home-btn');
+const submitBtn = document.getElementById('submit-btn');
 
 const questionText = document.getElementById('question-text');
 const optionsContainer = document.getElementById('options-container');
 const feedback = document.getElementById('feedback');
 const progressBar = document.getElementById('progress-bar');
 const progressText = document.getElementById('progress-text');
+const timerElement = document.getElementById('timer');
 
 const scoreElement = document.getElementById('score');
 const timeElement = document.getElementById('time');
@@ -65,6 +68,7 @@ async function initApp() {
     nextBtn.addEventListener('click', goToNextQuestion);
     restartBtn.addEventListener('click', restartQuiz);
     backHomeBtn.addEventListener('click', goToHome);
+    submitBtn.addEventListener('click', endQuiz);
 }
 
 // 开始答题
@@ -77,6 +81,9 @@ function startQuiz() {
     score = 0;
     userAnswers = new Array(quizData.length).fill(-1);
     startTime = Date.now();
+    
+    // 启动计时器
+    startTimer();
     
     showQuestion(currentQuestionIndex);
     updateProgress();
@@ -197,8 +204,32 @@ function updateProgress() {
     progressText.textContent = `${currentQuestionIndex + 1}/${quizData.length}`;
 }
 
+// 启动计时器
+function startTimer() {
+    // 清除之前的计时器
+    if (timerInterval) {
+        clearInterval(timerInterval);
+    }
+    
+    // 重置计时器显示
+    timerElement.textContent = '0';
+    
+    // 启动新的计时器
+    let elapsedTime = 0;
+    timerInterval = setInterval(() => {
+        elapsedTime++;
+        timerElement.textContent = elapsedTime;
+    }, 1000);
+}
+
 // 结束答题
 function endQuiz() {
+    // 清除计时器
+    if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+    }
+    
     endTime = Date.now();
     const timeTaken = Math.round((endTime - startTime) / 1000);
     
