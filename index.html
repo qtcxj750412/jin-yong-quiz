@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>金庸武侠题库</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>金庸武侠题库</h1>
+            <p>测试你对金庸武侠世界的了解</p>
+        </header>
+
+        <main>
+            <div id="welcome-screen" class="screen">
+                <h2>欢迎来到金庸武侠题库</h2>
+                <p>这里有丰富的金庸武侠知识题目，测试你的武侠素养！</p>
+                <button id="start-btn" class="btn">开始答题</button>
+            </div>
+
+            <div id="quiz-screen" class="screen" style="display: none;">
+                <div class="progress-container">
+                    <div class="progress-bar" id="progress-bar"></div>
+                    <p id="progress-text">1/10</p>
+                </div>
+                <div class="question-container">
+                    <h3 id="question-text">问题加载中...</h3>
+                    <div id="options-container" class="options"></div>
+                </div>
+                <div class="feedback" id="feedback"></div>
+                <div class="navigation">
+                    <button id="prev-btn" class="btn" style="display: none;">上一题</button>
+                    <button id="next-btn" class="btn" style="display: none;">下一题</button>
+                </div>
+            </div>
+
+            <div id="result-screen" class="screen" style="display: none;">
+                <h2>答题完成！</h2>
+                <div class="result-card">
+                    <p>你的得分：<span id="score"></span>/10</p>
+                    <p>用时：<span id="time"></span>秒</p>
+                    <div id="result-details"></div>
+                </div>
+                <button id="restart-btn" class="btn">重新答题</button>
+                <button id="back-home-btn" class="btn btn-secondary">返回首页</button>
+            </div>
+        </main>
+
+        <footer>
+            <p>© 2026 金庸武侠题库 - 致敬金庸先生</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
